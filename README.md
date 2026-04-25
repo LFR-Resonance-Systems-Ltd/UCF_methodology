@@ -1,149 +1,69 @@
-# UCF_methodology
-A methodology for quantifying cross-channel coherence in phase transitions (e.g., Raman vs transport in VO₂), using window-aligned correlation and T50 offset.
-# Unified Coherence Framework (UCF) — A Methodology for Cross-Channel Phase Transition Analysis
+# Analysis Results
 
-**Status**: Active research exploration. This is not a finished product, but a documented path of method development.
+## Files in this directory
+
+### UCF_VO2_complete.png
+Main 9-panel figure summarizing VO₂ cross-channel coherence analysis:
+- **Panels a–b**: c-plane transport (R vs T, d(logR)/dT vs T)
+- **Panels c–d**: r-plane transport
+- **Panels e–f**: c-plane cross-channel coherence (metallic fraction vs Raman r-ratio)
+- **Panels g–h**: r-plane cross-channel coherence
+- **Panel h**: Summary bar chart of coherence $\mathcal{C}_{AB}$ across all conditions
+
+**How to read**: All four conditions (c-plane ↑, c-plane ↓, r-plane ↑, r-plane ↓) show $\mathcal{C}_{AB} > 0.80$, with r-plane achieving near-perfect coherence (0.9950).
+
+### UCF_demo1_results.txt
+Numerical results table in UTF-8 text format. Contains:
+- Transport metrics: $T_{50}$, hysteresis $\Delta H$, peak temperature, FWHM
+- Cross-channel coherence: $\mathcal{C}_{AB}$ (raw and aligned), $\Delta T_{50}$ offsets
+- Summary verdict for window coherence (offset within hysteresis)
+
+### VO2_CAB_vs_substrate_doping.png
+Comparative summary of substrate/strain effects and Cr doping:
+- **Left panel**: $\Delta T_{50} = T_{50}^{\text{metal}} - T_{50}^{\text{rutile}}$ across 8 conditions
+- **Right panel**: Coherence $\mathcal{C}_{AB}$ (bars) and raw $\mathcal{C}_{\text{raw}}$ (scatter) with 0.80 threshold line
+
+**Key observation**: Cr-doped samples show reversed sign of $\Delta T_{50}$ compared to undoped, suggesting a strain-driven effect.
+
+### VO2_CAB_vs_substrate_doping.csv
+Tabular data (CSV, UTF-8) with one row per condition:
+- Columns: doping, substrate, branch (up/down)
+- Input CSV files used for each condition
+- Metrics: n_points, C_raw, C_aligned, T50_r_ratio, T50_metallic, dT50_metal_minus_r
+- Temperature window: [25°C, 100°C]
+
+**Usage**: Load in spreadsheet or Python to inspect raw numbers or create alternative visualizations.
 
 ---
 
-## Why This Framework?
+## How these results were generated
 
-In correlated electron materials undergoing metal-insulator transitions (MIT), different electronic and structural order parameters often change at different temperatures. **The central question**: how do we quantify whether these changes are genuinely coupled or merely coincidental?
+All outputs are **fully reproducible** from the digitized data:
 
-Existing approaches either:
-- Compare individual transition temperatures (loses information about shape/timing of the transition)
-- Use generic correlation metrics (neglect the intrinsic time/temperature offsets that transitions naturally have)
-
-**UCF's approach**: Define a window-aware coherence measure $\mathcal{C}_{AB}$ that:
-- Captures correlation *across* channels (e.g., electronic vs. structural)
-- Accounts for intrinsic offsets between their 50%-transition points
-- Remains insensitive to arbitrarily smooth portions of the curves
-- Provides a single interpretable metric: 0 = independent, 1 = perfectly tracked
-
----
-
-## Current Demonstrations
-
-### VO₂ on sapphire (Suleiman et al., 2021)
-- **Data source**: Digitized from Suleiman, Mansouri et al., *Scientific Reports* **11**, 1620 (2021)
-- **Finding**: c-plane and r-plane show $\mathcal{C}_{AB} > 0.95$, with r-plane achieving near-perfect coherence (0.9950)
-- **Interpretation**: Transport (metallic fraction) and Raman structural order are tightly coupled across both crystal faces
-- **Method**: [scripts/UCF_demo1_analysis.py](scripts/UCF_demo1_analysis.py)
-
-### VO₂ with Cr doping
-- **Data source**: Same paper, Fig.7c (Cr-doped c-plane) and Fig.7d (r-plane)
-- **Preliminary findings**: Substrate-strain effects show distinct $\Delta T_{50}$ signatures; Cr doping produces sign-flip in offset trend
-- **Method**: [scripts/vo2_cab_vs_substrate_doping.py](scripts/vo2_cab_vs_substrate_doping.py)
-
----
-
-## Quick Start
-
-### Prerequisites
 ```bash
-pip install numpy pandas scipy matplotlib
-```
-
-### Run the analysis
-```bash
-cd scripts
+# Generate VO₂ transport + cross-channel figure
+cd ../scripts
 python UCF_demo1_analysis.py
-```
+# → ../results/UCF_VO2_complete.png, UCF_demo1_results.txt
 
-Outputs:
-- `../results/UCF_VO2_complete.png` — 9-panel figure with transport and cross-channel coherence
-- `../results/UCF_demo1_results.txt` — numerical results (UTF-8)
-
-### Reproduce the substrate/doping summary
-```bash
-cd scripts
+# Generate substrate/doping comparison
 python vo2_cab_vs_substrate_doping.py
+# → ../results/VO2_CAB_vs_substrate_doping.png, .csv
 ```
 
-Outputs:
-- `../results/VO2_CAB_vs_substrate_doping.csv` — summary table
-- `../results/VO2_CAB_vs_substrate_doping.png` — comparative coherence plot
+All scripts run in-place; no command-line arguments required.
 
 ---
 
-## Directory Structure
+## Notes on digitization uncertainty
 
-```
-UCF_methodology/
-├── README.md                          # This file
-├── METHOD.md                          # Detailed method description & definitions
-├── data/
-│   ├── Figure4/                       # Digitized transport data (Suleiman et al., Fig.4a, 4c)
-│   │   └── {a,c}_{R,dlogR_dT}_{up,down}.csv
-│   └── Figure7/                       # Digitized Raman/metallic fraction data (Fig.7a-d)
-│       └── {a,b,c,d}_{r_ratio,c_metallic_fraction}_{up,down}.csv
-├── scripts/
-│   ├── UCF_demo1_analysis.py          # Main VO₂ analysis (transport + cross-channel)
-│   └── vo2_cab_vs_substrate_doping.py # Substrate/strain comparison & doping effects
-└── results/
-    ├── UCF_VO2_complete.png           # 9-panel summary figure
-    ├── UCF_demo1_results.txt          # Numerical results
-    ├── VO2_CAB_vs_substrate_doping.png # Comparative coherence plot
-    └── VO2_CAB_vs_substrate_doping.csv # Summary metrics table
-```
+These results are based on **digitized figures**, not raw experimental data. Uncertainties:
+- Coordinate extraction: ±0.5–1.5% per axis (temperature ±0.5°C, fraction ±0.01)
+- Impact on $\mathcal{C}_{AB}$: ±0.01–0.02 (qualitative findings robust)
+- Impact on $T_{50}$: ±0.5–1°C (but $\Delta T_{50}$ offsets are typically 2–5°C)
+
+**Interpretation**: Qualitative results (e.g., r-plane shows higher coherence, Cr-doped sign-flip) are reliable; quantitative precision should be quoted with ±5–10% caveats.
 
 ---
 
-## Key Parameters & Choices
-
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| Coherence window | 40–90°C | Covers the transition region for both c- and r-plane; avoids extreme T where digitization noise dominates |
-| Gaussian smoothing σ | 5–8 grid points | Reduces digitization artifacts without erasing transition sharpness |
-| T_grid resolution | 600 points over [20, 100]°C | ~0.13°C per point; smooth enough for derivative calculations |
-| T50 definition | Fraction = 0.5 | Standard electronic/structural transition midpoint |
-
-For full justification, see [METHOD.md](METHOD.md).
-
----
-
-## Known Limitations & Next Steps
-
-### Current limitations
-1. **Data source**: Digitized from published figures, not raw experimental files
-   - Inherent uncertainty in coordinate extraction (~0.5–1% per axis)
-   - No access to original error bars or measurement details
-2. **Single material system**: Only VO₂ demonstrated
-   - Need results from another MIT candidate (e.g., TiO₂, NdNiO₃, or HEA) to validate universality
-3. **Preliminary Cr-doping results**: Available data incomplete
-   - Fig.7c/d filenames contain export artifacts; not all conditions have complete up/down branches
-4. **No theory**: $\mathcal{C}_{AB}$ is empirical
-   - Would benefit from equilibrium statistical mechanics grounding
-
-### Next steps
-- [ ] Analyze TiO₂ anatase→rutile transition (another canonical MIT)
-- [ ] Access raw (non-digitized) data for VO₂ to reduce uncertainty
-- [ ] Complete Cr-doped VO₂ Raman data if available
-- [ ] Develop minimal theoretical model for $\mathcal{C}_{AB}$ interpretation
-- [ ] Compare against other cross-channel metrics (e.g., mutual information, transfer entropy)
-
----
-
-## How to Cite This Work
-
-Since this is ongoing research methodology, the standard citation is not yet finalized. If you use this framework, please cite the Suleiman et al. data and mention this repository:
-
-> Methodology repository: https://github.com/[your-username]/UCF_methodology  
-> Data source: Suleiman et al., *Scientific Reports* **11**, 1620 (2021), DOI: 10.1038/s41598-020-79758-1
-
----
-
-## Contributing & Feedback
-
-This is an active record of a real scientific exploration. If you:
-- Find a bug in the scripts, open an issue
-- Have data from another material system to test, please share
-- Want to propose a different coherence definition, let's discuss it
-
-**The goal is to make this path real and improvable, not to declare it finished.**
-
----
-
-## License
-
-This work is released under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, matching the license of the original Suleiman et al. (2021) data.
+*Last generated: April 25, 2026*

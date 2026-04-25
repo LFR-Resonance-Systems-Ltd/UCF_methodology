@@ -1,0 +1,43 @@
+
+UCF Demo 1 — Numerical Results
+================================
+Source: Suleiman et al. (2021), Scientific Reports 11:1620
+
+--- Figure 4a: c-plane sapphire transport ---
+T_MIT (heating, 50% mf):   73.7°C    [paper: 70.9°C]
+T_MIT (cooling, 50% mf):   68.5°C
+Hysteresis ΔH:             5.2°C    [paper: 5.2°C]
+d(logR)/dT peak T:         73.7°C
+d(logR)/dT FWHM δT:        6.8°C    [paper: 6.3°C]
+
+--- Figure 4c: r-plane sapphire transport ---
+T_MIT (heating, 50% mf):   65.9°C    [paper: 63.1°C]
+T_MIT (cooling, 50% mf):   61.7°C
+Hysteresis ΔH:             4.3°C    [paper: 3.9°C]
+d(logR)/dT peak T:         65.1°C
+d(logR)/dT FWHM δT:        4.4°C    [paper: 3.3°C]
+
+--- Figure 7a: c-plane cross-channel coherence ---
+C_AB heating (40-90°C):    0.9464    [threshold: 0.80 ✓]
+C_AB heating aligned:      0.9988
+C_AB cooling (40-90°C):    0.9737    [threshold: 0.80 ✓]
+C_AB cooling aligned:      0.9990
+T50 offset (transport - Raman) heating: 4.2°C
+T50 offset (transport - Raman) cooling: 2.8°C
+Hysteresis (transport):    5.2°C
+Window coherence (heating): PASS ✓
+
+--- Figure 7b: r-plane cross-channel coherence ---
+C_AB heating (40-90°C):    0.9950    [threshold: 0.80 ✓]
+C_AB heating aligned:      0.9950
+C_AB cooling (40-90°C):    0.9955    [threshold: 0.80 ✓]
+C_AB cooling aligned:      0.9975
+T50 offset (transport - Raman) heating: 0.1°C
+T50 offset (transport - Raman) cooling: -0.7°C
+Hysteresis (transport):    4.3°C
+Window coherence (heating): PASS ✓
+
+--- UCF Summary ---
+All 4 conditions: C_AB > 0.80  ✓
+r-plane achieves near-perfect coherence: C = 0.9950
+c-plane offset within hysteresis bounds: 4.2°C < 5.2°C  ✓
